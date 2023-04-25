@@ -1,0 +1,5 @@
+.vs/
+StocksAppAssignment.WebAPI/bin/
+StocksAppAssignment.WebAPI/ClientApp/.angular/
+StocksAppAssignment.WebAPI/obj/Debug/
+StocksAppAssignment.WebAPI/obj/
