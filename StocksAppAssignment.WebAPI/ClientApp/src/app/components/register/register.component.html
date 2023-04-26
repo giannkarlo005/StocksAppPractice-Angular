@@ -5,62 +5,120 @@
         (ngSubmit)="onRegisterButtonClicked()">
 
     <!--Email-->
-    <div class="form-field flex margin-bottom-30">
-      <div class="w-20 inline-block ">
-        <label>Email Address</label>
+    <div class="form-field margin-bottom-30">
+      <div class="flex">
+        <div class="w-20 inline-block">
+          <label>Email Address</label>
+        </div>
+        <div class="flex-1 inline-block ">
+          <div>
+            <input class="input width-px-300"
+                   formControlName="emailAddress" />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 inline-block ">
-        <div>
-          <input class="input width-px-300"
-                 formControlName="emailAddress" />
+      <div class="flex">
+        <div class="w-20 inline-block">
+        </div>
+        <div class="flex-1 text-red inline-block"
+             *ngIf="register_emailAddressControl.touched && register_emailAddressControl.errors?.['required']">
+          Email Address cannot be blank
         </div>
       </div>
     </div>
 
     <!--Person Name-->
-    <div class="form-field flex margin-bottom-30">
-      <div class="w-20 inline-block ">
-        <label>Person Name</label>
+    <div class="form-field margin-bottom-30">
+      <div class="flex">
+        <div class="w-20 inline-block">
+          <label>Person Name</label>
+        </div>
+        <div class="flex-1 inline-block ">
+          <div>
+            <input class="input width-px-300"
+                   formControlName="personName" />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 inline-block ">
-        <input class="input width-px-300"
-               formControlName="personName" />
+      <div class="flex">
+        <div class="w-20 inline-block">
+        </div>
+        <div class="flex-1 text-red inline-block"
+             *ngIf="register_personNameControl.touched && register_personNameControl.errors?.['required']">
+            Person Name cannot be blank
+        </div>
       </div>
     </div>
 
     <!--Phone Number-->
-    <div class="form-field flex ">
-      <div class="w-20 inline-block margin-bottom-30">
-        <label>Phone Number</label>
+    <div class="form-field margin-bottom-30">
+      <div class="flex">
+        <div class="w-20 inline-block">
+          <label>Phone Number</label>
+        </div>
+        <div class="flex-1 inline-block">
+          <div>
+            <input class="input width-px-300"
+                   type="number"
+                   formControlName="phoneNumber" />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 inline-block ">
-        <input class="input width-px-300"
-               type="number"
-               formControlName="phoneNumber" />
+      <div class="flex">
+        <div class="w-20 inline-block">
+        </div>
+        <div class="flex-1 text-red inline-block"
+             *ngIf="register_phoneNumberControl.touched && register_phoneNumberControl.errors?.['required']">
+          Phone number cannot be blank
+        </div>
       </div>
     </div>
 
     <!--Password-->
-    <div class="form-field flex ">
-      <div class="w-20 inline-block margin-bottom-30">
-        <label>Password</label>
+    <div class="form-field margin-bottom-30">
+      <div class="flex">
+        <div class="w-20 inline-block">
+          <label>Password</label>
+        </div>
+        <div class="flex-1 inline-block">
+          <div>
+            <input class="input width-px-300"
+                   type="password"
+                   formControlName="password" />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 inline-block ">
-        <input class="input width-px-300"
-               type="password"
-               formControlName="password" />
+      <div class="flex">
+        <div class="w-20 inline-block">
+        </div>
+        <div class="flex-1 text-red inline-block"
+             *ngIf="register_passwordControl.touched && register_passwordControl.errors?.['required']">
+          Password is required
+        </div>
       </div>
     </div>
 
     <!--Confirm Password-->
-    <div class="form-field flex ">
-      <div class="w-20 inline-block margin-bottom-30">
-        <label>Confirm Password</label>
+    <div class="form-field margin-bottom-30">
+      <div class="flex">
+        <div class="w-20 inline-block">
+          <label>Confirm Password</label>
+        </div>
+        <div class="flex-1 inline-block">
+          <div>
+            <input class="input width-px-300"
+                   type="password"
+                   formControlName="confirmPassword" />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 inline-block ">
-        <input class="input width-px-300"
-               type="password"
-               formControlName="confirmPassword" />
+      <div class="flex">
+        <div class="w-20 inline-block">
+        </div>
+        <div class="flex-1 text-red inline-block"
+             *ngIf="register_confirmPasswordControl.touched && register_confirmPasswordControl.errors?.['required']">
+          Confirm Password is required
+        </div>
       </div>
     </div>
 
