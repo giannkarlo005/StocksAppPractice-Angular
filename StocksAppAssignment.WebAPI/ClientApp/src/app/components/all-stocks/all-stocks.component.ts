@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsExchange } from '../../models/us-exchange';
+import { AppService } from '../../services/app-service';
 import { StocksService } from '../../services/stocks.service';
 
 @Component({
@@ -18,11 +19,16 @@ export class AllStocksComponent implements OnInit {
   private maxLength: number = 25;
 
   constructor(private _router: Router,
+              private _appService: AppService,
               private _stocksService: StocksService) {
   }
 
   ngOnInit(): void {
     this.fetchStocksList();
+  }
+
+  getIsUserLoggedIn() {
+    return this._appService.getIsUserLoggedIn();
   }
 
   private fetchStocksList(): void {
@@ -34,8 +40,13 @@ export class AllStocksComponent implements OnInit {
           this.isShowLoadMoreButtonShown = true;
         }
       },
-      error: (error: Error) => {
-        console.log(error);
+      error: (error: any) => {
+        if (error && error.status) {
+          //Unauthorized
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
       }

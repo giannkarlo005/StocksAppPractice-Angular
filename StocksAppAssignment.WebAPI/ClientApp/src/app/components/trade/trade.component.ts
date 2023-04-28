@@ -57,13 +57,22 @@ export class TradeComponent implements OnInit, OnDestroy {
     return orderRequest;
   }
 
+  getIsUserLoggedIn() {
+    return this._appService.getIsUserLoggedIn();
+  }
+
   getCompanyStockPrice(stockSymbol: string): void {
     this._tradeService.getCompanyStockPrice(stockSymbol).subscribe({
       next: (response: StockTrade) => {
         this.stockTrade = response;
       },
-      error: (error: Error) => {
-        console.log(error);
+      error: (error: any) => {
+        //Unauthorized
+        if (error && error.status) {
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
 
@@ -83,10 +92,14 @@ export class TradeComponent implements OnInit, OnDestroy {
       this._tradeService.buyOrder(orderRequest).subscribe({
         next: (response: any) => {
           this._router.navigate([`/order/${this.stockTrade.stockSymbol}`]);
-          console.log(response);
         },
-        error: (error: Error) => {
-          console.log(error);
+        error: (error: any) => {
+          if (error && error.status) {
+            //Unauthorized
+            if (error.status === 401) {
+              this._router.navigate(['/login']);
+            }
+          }
         },
         complete: () => {
 
@@ -108,8 +121,13 @@ export class TradeComponent implements OnInit, OnDestroy {
         next: (response: any) => {
           this._router.navigate([`/order/${this.stockTrade.stockSymbol}`]);
         },
-        error: (error: Error) => {
-          console.log(error);
+        error: (error: any) => {
+          if (error && error.status) {
+            //Unauthorized
+            if (error.status === 401) {
+              this._router.navigate(['/login']);
+            }
+          }
         },
         complete: () => {
 

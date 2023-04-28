@@ -40,8 +40,12 @@ export class LoginComponent {
     this._accountService.loginUser(this.loginForm.value).subscribe({
       next: (response: any) => {
         // If it returns the isSucceeded sign im result
-        if (response === true) {
+        if (response.token !== null || response.token !== "") {
+          localStorage["token"] = response.token;
+
           this._appService.setIsUserLoggedIn(true);
+          this.loginForm.reset();
+
           this._router.navigate(['/stocks']);
         }
       },

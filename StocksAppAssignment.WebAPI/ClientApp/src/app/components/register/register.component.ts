@@ -44,6 +44,7 @@ export class RegisterComponent {
   }
 
   onRegisterButtonClicked(): void {
+    console.log('onRegisterButtonClicked');
     this.isRegisterFormSubmitted = true;
     console.log(this.registerForm);
     if (!this.registerForm.valid) {

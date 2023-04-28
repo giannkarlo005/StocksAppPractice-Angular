@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
+import { AppService } from '../../services/app-service';
 import { OrderService } from '../../services/order.service';
 
 @Component({
@@ -14,9 +15,10 @@ export class OrderListComponent implements OnInit, OnDestroy {
   buyOrders: any[] = [];
   sellOrders: any[] = [];
 
-  constructor(private _orderService: OrderService,
-              private _activatedRoute: ActivatedRoute
-  ) {
+  constructor(private _appService: AppService,
+              private _orderService: OrderService,
+              private _activatedRoute: ActivatedRoute,
+              private _router: Router) {
     this.paramSubscription = this._activatedRoute.paramMap.subscribe((params) => {
       this.stockSymbol = params.get('stockSymbol')?.toString();
 
@@ -33,6 +35,10 @@ export class OrderListComponent implements OnInit, OnDestroy {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
     }
+  }
+
+  getIsUserLoggedIn() {
+    return this._appService.getIsUserLoggedIn();
   }
 
   computeTradeAmount(orderQuantity: number, orderPrice: number): number {
@@ -55,8 +61,13 @@ export class OrderListComponent implements OnInit, OnDestroy {
         this.buyOrders = response.buyOrders || [];
         this.sellOrders = response.sellOrders || [];
       },
-      error: (error: Error) => {
-        console.log(error);
+      error: (error: any) => {
+        if (error && error.status) {
+          //Unauthorized
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
       }
@@ -72,9 +83,13 @@ export class OrderListComponent implements OnInit, OnDestroy {
         window.open(url);
 
       },
-      error: (error: Error) => {
-        console.log(error);
-
+      error: (error: any) => {
+        //Unauthorized
+        if (error && error.status) {
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
 

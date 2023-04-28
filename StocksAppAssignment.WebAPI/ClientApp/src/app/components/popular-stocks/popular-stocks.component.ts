@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CompanyProfile } from '../../models/company-profile';
 import { AppService } from '../../services/app-service';
@@ -15,7 +16,8 @@ export class PopularStocksComponent implements OnInit {
   selectedStock: CompanyProfile | null = null;
 
   constructor(private _appService: AppService,
-              private _stocksService: StocksService) {
+              private _stocksService: StocksService,
+              private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,13 +29,21 @@ export class PopularStocksComponent implements OnInit {
       next: (response: Stock[]) => {
         this.popularStocks = response;
       },
-      error: (error: Error) => {
-
+      error: (error: any) => {
+        //Unauthorized
+        if (error && error.status) {
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
-
       }
     });
+  }
+
+  getIsUserLoggedIn() {
+    return this._appService.getIsUserLoggedIn();
   }
 
   onStockSelected(stockSymbol: any): void {
@@ -42,8 +52,13 @@ export class PopularStocksComponent implements OnInit {
         this.selectedStock = response;
         this._appService.setStockSymbol(stockSymbol);
       },
-      error: (error: Error) => {
-        console.log(error);
+      error: (error: any) => {
+        //Unauthorized
+        if (error && error.status) {
+          if (error.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
       },
       complete: () => {
       }

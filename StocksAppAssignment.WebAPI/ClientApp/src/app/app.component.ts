@@ -77,9 +77,11 @@ export class AppComponent implements OnInit {
     this._accountService.logoutUser().subscribe({
       next: () => {
         this._appService.setIsUserLoggedIn(false);
-        this._router.navigate(['']);
+        localStorage.removeItem('token');
+
+        this._router.navigate(['/login']);
       },
-      error: (error: Error) => {
+      error: (error: any) => {
         console.log(error);
       },
       complete: () => {
